@@ -13,13 +13,14 @@ interface Props {
   decimals?: number
   /** Always show all decimals and thousands dots, e.g. 1.444,70 (for prices). */
   money?: boolean
+  compact?: boolean
 }
 
 /**
  * A number box that is friendly on phones: opens the number keyboard,
  * accepts both "2.5" and "2,5", and only applies valid numbers.
  */
-export function NumberField({ value, onChange, min = 0, max = Infinity, suffix, label, className = '', decimals = 2, money = false }: Props) {
+export function NumberField({ value, onChange, min = 0, max = Infinity, suffix, label, className = '', decimals = 2, money = false, compact = false }: Props) {
   const { lang } = useI18n()
   // Indonesian uses a decimal comma: 2,5
   const show = (v: number) => {
@@ -39,7 +40,7 @@ export function NumberField({ value, onChange, min = 0, max = Infinity, suffix, 
   }
 
   return (
-    <label className={`flex items-center rounded-xl bg-surface-2 px-3 focus-within:ring-2 focus-within:ring-accent ${className}`}>
+    <label className={`flex items-center bg-surface-2 ${compact ? 'rounded-lg px-2' : 'rounded-xl px-3'} focus-within:ring-2 focus-within:ring-accent ${className}`}>
       <span className="sr-only">{label}</span>
       <input
         inputMode="decimal"
@@ -47,7 +48,7 @@ export function NumberField({ value, onChange, min = 0, max = Infinity, suffix, 
         onFocus={(e) => { setDraft(edit(value)); e.target.select() }}
         onBlur={() => setDraft(null)}
         onChange={(e) => { setDraft(e.target.value); commit(e.target.value) }}
-        className="w-full min-w-0 bg-transparent py-2.5 text-right text-lg font-semibold tabular-nums outline-none"
+        className={`w-full min-w-0 bg-transparent text-right font-semibold tabular-nums outline-none ${compact ? 'py-1 text-sm' : 'py-2.5 text-lg'}`}
       />
       {suffix && <span className="ml-1 shrink-0 text-sm text-muted">{suffix}</span>}
     </label>

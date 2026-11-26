@@ -111,3 +111,18 @@ describe("the user's example", () => {
     expect(pb.months).toBeGreaterThan(50)
   })
 })
+
+import { formatRupiahShort, niceStep } from '../src/core/format'
+describe('chart helpers', () => {
+  it('short Rupiah', () => {
+    expect(formatRupiahShort(1_250_000, 'id')).toBe('Rp 1,3 jt')
+    expect(formatRupiahShort(1_250_000, 'en')).toBe('Rp 1.3M')
+    expect(formatRupiahShort(500_000, 'id')).toBe('Rp 500 rb')
+    expect(formatRupiahShort(0, 'en')).toBe('Rp 0')
+  })
+  it('nice axis steps', () => {
+    expect(niceStep(7_000_000)).toBe(2_000_000)
+    expect(niceStep(290_000)).toBe(100_000)
+    expect(niceStep(1000)).toBe(250)
+  })
+})

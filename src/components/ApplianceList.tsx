@@ -7,7 +7,7 @@ import { ApplianceCard } from './ApplianceCard'
 import { AddApplianceSheet } from './AddApplianceSheet'
 
 /** Editable list of appliances. Used for "Current" now, and "What-if" in Compare. */
-export function ApplianceList({ list }: { list: ListKey }) {
+export function ApplianceList({ list, compact = false }: { list: ListKey; compact?: boolean }) {
   const { data, dispatch } = useStore()
   const { t } = useI18n()
   const items = data[list]
@@ -29,7 +29,7 @@ export function ApplianceList({ list }: { list: ListKey }) {
   }
 
   return (
-    <div className="space-y-3">
+    <div className={compact ? 'space-y-2' : 'space-y-3'}>
       {items.length === 0 && <p className="rounded-2xl bg-surface p-4 text-muted">{t.emptyList}</p>}
 
       {items.map((item) => (
@@ -41,12 +41,13 @@ export function ApplianceList({ list }: { list: ListKey }) {
           onToggleEdit={() => setEditingId(editingId === item.id ? null : item.id)}
           onChange={(patch) => dispatch({ type: 'update', list, id: item.id, patch })}
           onDelete={() => remove(item)}
+          compact={compact}
         />
       ))}
 
       <button
         onClick={() => setAdding(true)}
-        className="w-full rounded-2xl border-2 border-dashed border-line py-4 text-lg font-semibold text-accent active:bg-surface"
+        className={`w-full border-2 border-dashed border-line font-semibold text-accent active:bg-surface ${compact ? 'rounded-xl py-2.5 text-sm' : 'rounded-2xl py-4 text-lg'}`}
       >
         + {t.addAppliance}
       </button>

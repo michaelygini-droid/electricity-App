@@ -15,37 +15,38 @@ interface Props {
   onToggleEdit: () => void
   onChange: (patch: Partial<Appliance>) => void
   onDelete: () => void
+  compact?: boolean
 }
 
-export function ApplianceCard({ item, tariff, editing, onToggleEdit, onChange, onDelete }: Props) {
+export function ApplianceCard({ item, tariff, editing, onToggleEdit, onChange, onDelete, compact = false }: Props) {
   const { t, lang } = useI18n()
   const kwh = applianceKwhPerDay(item)
   const cost = costForKwh(kwh, tariff)
   const hours = dailyHours(item)
 
   return (
-    <article className="rounded-2xl bg-surface p-4">
+    <article className={`bg-surface ${compact ? 'rounded-xl px-3 py-2' : 'rounded-2xl p-4'}`}>
       {/* Summary row */}
       <div className="flex items-start gap-3">
         <button onClick={onToggleEdit} className="min-w-0 flex-1 text-left">
-          <h3 className="truncate text-lg font-semibold">{item.name || '—'}</h3>
-          <p className="text-sm text-muted tabular-nums">
+          <h3 className={`truncate font-semibold ${compact ? 'text-sm' : 'text-lg'}`}>{item.name || '—'}</h3>
+          <p className={`text-muted tabular-nums ${compact ? 'text-xs' : 'text-sm'}`}>
             {item.quantity > 1 && `${item.quantity} × `}{item.watts} W · {fmtHours(hours, lang)} {t.hoursShort}
           </p>
         </button>
         <div className="text-right">
-          <p className="text-lg font-bold text-cost tabular-nums">{formatRupiah(cost)}<span className="text-xs font-normal text-muted">{t.perDay}</span></p>
-          <p className="text-sm text-muted tabular-nums">{formatKwh(kwh, lang)} kWh</p>
+          <p className={`font-bold text-cost tabular-nums ${compact ? 'text-sm' : 'text-lg'}`}>{formatRupiah(cost)}<span className="text-xs font-normal text-muted">{t.perDay}</span></p>
+          <p className={`text-muted tabular-nums ${compact ? 'text-xs' : 'text-sm'}`}>{formatKwh(kwh, lang)} kWh</p>
         </div>
       </div>
 
       {/* Always-visible quick control */}
       {item.mode === 'hours' ? (
-        <div className="mt-2"><HoursSlider value={item.hoursPerDay} onChange={(v) => onChange({ hoursPerDay: v })} /></div>
+        <div className={compact ? '-my-1' : 'mt-2'}><HoursSlider value={item.hoursPerDay} onChange={(v) => onChange({ hoursPerDay: v })} compact={compact} /></div>
       ) : !editing && (
-        <button onClick={onToggleEdit} className="mt-3 flex flex-wrap gap-2">
+        <button onClick={onToggleEdit} className={`flex flex-wrap gap-2 ${compact ? 'mt-2' : 'mt-3'}`}>
           {item.ranges.map((r, i) => (
-            <span key={i} className="rounded-lg bg-surface-2 px-2.5 py-1 text-sm tabular-nums">
+            <span key={i} className={`rounded-lg bg-surface-2 px-2.5 py-1 tabular-nums ${compact ? 'text-xs' : 'text-sm'}`}>
               {formatHHMM(r.start)} → {formatHHMM(r.end)}{r.end < r.start && <sup className="ml-0.5 text-muted">+1</sup>}
             </span>
           ))}
