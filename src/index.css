@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Design tokens: one place to change the app's colours. */
+@theme {
+  --color-bg: #0b0f14;
+  --color-surface: #151b23;
+  --color-surface-2: #1e2630;
+  --color-line: #2a3440;
+  --color-text: #e8edf2;
+  --color-muted: #8b98a8;
+  --color-accent: #facc15;   /* electricity yellow */
+  --color-save: #22c55e;     /* savings = green */
+  --color-cost: #f87171;     /* cost = red */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
