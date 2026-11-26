@@ -43,4 +43,7 @@ export const id: Dict = {
   perDay: '/hari',
   emptyList: 'Belum ada peralatan. Ketuk “Tambah peralatan” untuk mulai.',
   typicalWatts: 'Nilai perkiraan — cek label pada perangkat Anda.',
+  version: 'Versi',
+  checkUpdates: 'Periksa pembaruan',
+  checking: 'Memeriksa…',
 }

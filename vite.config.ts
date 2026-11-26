@@ -7,13 +7,24 @@ import { VitePWA } from 'vite-plugin-pwa'
 // passes BASE_PATH. Locally it is just "/".
 const base = process.env.BASE_PATH ?? '/'
 
+// Shown in Settings so you can see which version is running.
+const version = process.env.npm_package_version ?? '0.0.0'
+const buildTime = new Date().toLocaleString('en-GB', {
+  timeZone: 'Asia/Jakarta', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
+})
+
 export default defineConfig({
   base,
+  define: {
+    __APP_VERSION__: JSON.stringify(version),
+    __BUILD_TIME__: JSON.stringify(buildTime),
+  },
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: false, // registered in src/pwa.ts
       includeAssets: ['icons/apple-touch-icon.png'],
       manifest: {
         name: 'Listrik — Electricity Estimator',

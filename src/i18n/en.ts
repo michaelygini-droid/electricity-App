@@ -41,5 +41,8 @@ export const en = {
   perDay: '/day',
   emptyList: 'No appliances yet. Tap “Add appliance” to start.',
   typicalWatts: 'Typical value — check the label on your device.',
+  version: 'Version',
+  checkUpdates: 'Check for updates',
+  checking: 'Checking…',
 }
 export type Dict = typeof en
