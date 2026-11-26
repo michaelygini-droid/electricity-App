@@ -46,4 +46,13 @@ export const id: Dict = {
   version: 'Versi',
   checkUpdates: 'Periksa pembaruan',
   checking: 'Memeriksa…',
+  // Totals
+  perMonth: 'per bulan',
+  perDayLong: 'per hari',
+  energy: 'Energi',
+  biggestUser: 'Pemakai terbesar',
+  ofTotal: 'dari total',
+  rateNote: 'Harga',
+  editRate: 'Ubah',
+  monthShort: '/bln',
 }

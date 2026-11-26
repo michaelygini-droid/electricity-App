@@ -9,7 +9,7 @@ import { load, save } from './state/storage'
 export default function App() {
   const { t } = useI18n()
   const [tab, setTab] = useState<Tab>(() => load<Tab>('tab', 'appliances'))
-  const change = (next: Tab) => { setTab(next); save('tab', next) }
+  const change = (next: Tab) => { setTab(next); save('tab', next); window.scrollTo(0, 0) }
 
   const titles: Record<Tab, string> = {
     appliances: t.tabAppliances,
@@ -24,7 +24,7 @@ export default function App() {
         <h1 className="text-2xl font-bold">{titles[tab]}</h1>
       </header>
       <main className="flex-1">
-        {tab === 'appliances' && <AppliancesScreen />}
+        {tab === 'appliances' && <AppliancesScreen onOpenSettings={() => change('settings')} />}
         {tab === 'compare' && <CompareScreen />}
         {tab === 'settings' && <SettingsScreen />}
       </main>

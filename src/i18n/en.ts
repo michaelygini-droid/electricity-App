@@ -44,5 +44,14 @@ export const en = {
   version: 'Version',
   checkUpdates: 'Check for updates',
   checking: 'Checking…',
+  // Totals
+  perMonth: 'per month',
+  perDayLong: 'per day',
+  energy: 'Energy',
+  biggestUser: 'Biggest user',
+  ofTotal: 'of total',
+  rateNote: 'Price',
+  editRate: 'Edit',
+  monthShort: '/mo',
 }
 export type Dict = typeof en
