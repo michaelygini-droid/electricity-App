@@ -1,12 +1,5 @@
-import { Card } from '../components/Card'
-import { useI18n } from '../i18n'
+import { ApplianceList } from '../components/ApplianceList'
 
 export function AppliancesScreen() {
-  const { t } = useI18n()
-  return (
-    <Card>
-      <p>{t.appliancesIntro}</p>
-      <p className="mt-2 text-sm text-muted">{t.comingSoon}</p>
-    </Card>
-  )
+  return <ApplianceList list="current" />
 }
