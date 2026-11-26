@@ -56,11 +56,12 @@ describe('energy and cost', () => {
     expect(dailyHours({ ...base, hoursPerDay: -2 })).toBe(0)
   })
   it('adds PPJ on top of the price', () => {
-    expect(effectivePrice({ pricePerKwh: 1000, ppjPercent: 2.4 })).toBeCloseTo(1024)
-    expect(effectivePrice({ pricePerKwh: 1444.7, ppjPercent: 0 })).toBeCloseTo(1444.7)
+    const tar = { pricePerKwh: 1000, ppjPercent: 2.4, ppjOn: true, plan: 'custom' }
+    expect(effectivePrice(tar)).toBeCloseTo(1024)
+    expect(effectivePrice({ ...tar, ppjOn: false })).toBeCloseTo(1000)
   })
   it('summarizes a list', () => {
-    const s = summarize([base], { pricePerKwh: 1000, ppjPercent: 0 })
+    const s = summarize([base], { pricePerKwh: 1000, ppjPercent: 2.4, ppjOn: false, plan: 'custom' })
     expect(s.kwhDay).toBeCloseTo(1.2)
     expect(s.costDay).toBeCloseTo(1200)
     expect(s.kwhMonth).toBeCloseTo(1.2 * DAYS_PER_MONTH)

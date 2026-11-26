@@ -60,10 +60,16 @@ export function reducer(state: AppData, action: Action): AppData {
 export function migrate(raw: unknown): AppData {
   const d = raw as Partial<AppData> | null
   if (!d || d.version !== 1 || !Array.isArray(d.current) || !Array.isArray(d.whatIf)) return INITIAL_DATA
+  const savedTariff: Partial<AppData['tariff']> = { ...d.tariff }
+  // Data saved before the PPJ on/off switch existed stored "off" as 0%.
+  if (savedTariff.ppjOn === undefined) {
+    savedTariff.ppjOn = (savedTariff.ppjPercent ?? 0) > 0
+    if (!savedTariff.ppjOn) delete savedTariff.ppjPercent
+  }
   return {
     ...INITIAL_DATA,
     ...d,
-    tariff: { ...INITIAL_DATA.tariff, ...d.tariff },
+    tariff: { ...INITIAL_DATA.tariff, ...savedTariff },
     upgrade: { ...INITIAL_DATA.upgrade, ...d.upgrade },
   } as AppData
 }

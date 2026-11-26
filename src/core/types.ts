@@ -27,6 +27,10 @@ export interface Appliance {
 export interface Tariff {
   /** Rupiah per kWh before tax. */
   pricePerKwh: number
-  /** PPJ (street lighting tax) percentage, e.g. 2.4. 0 = off. */
+  /** PPJ (street lighting tax) percentage, e.g. 2.4. */
   ppjPercent: number
+  /** Whether PPJ is added. Kept separate so the % is remembered when switched off. */
+  ppjOn: boolean
+  /** The chosen PLN plan. If the price differs from that plan's rate, it was edited by hand. */
+  plan: string
 }

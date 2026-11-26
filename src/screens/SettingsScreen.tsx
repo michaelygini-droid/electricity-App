@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Card } from '../components/Card'
+import { TariffSettings } from '../components/TariffSettings'
 import { APP_VERSION, checkForUpdates } from '../pwa'
 import { useI18n, type Lang } from '../i18n'
+import { useStore } from '../state/store'
 
 const langs: { code: Lang; label: string }[] = [
   { code: 'en', label: 'English' },
@@ -10,11 +12,16 @@ const langs: { code: Lang; label: string }[] = [
 
 export function SettingsScreen() {
   const { t, lang, setLang } = useI18n()
+  const { dispatch } = useStore()
   const [checking, setChecking] = useState(false)
+
   return (
     <div className="space-y-4">
+      <h2 className="px-1 pt-1 text-sm font-semibold tracking-wide text-muted uppercase">{t.tariff}</h2>
+      <TariffSettings />
+
+      <h2 className="px-1 pt-3 text-sm font-semibold tracking-wide text-muted uppercase">{t.language}</h2>
       <Card>
-        <h2 className="mb-3 text-sm font-semibold text-muted">{t.language}</h2>
         <div className="grid grid-cols-2 gap-2 rounded-xl bg-surface-2 p-1">
           {langs.map((l) => (
             <button
@@ -29,11 +36,8 @@ export function SettingsScreen() {
           ))}
         </div>
       </Card>
-      <Card>
-        <p>{t.settingsIntro}</p>
-        <p className="mt-2 text-sm text-muted">{t.comingSoon}</p>
-      </Card>
-      <p className="px-1 text-sm text-muted">{t.installHint}</p>
+
+      <h2 className="px-1 pt-3 text-sm font-semibold tracking-wide text-muted uppercase">App</h2>
       <Card className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs text-muted">{t.version}</p>
@@ -47,6 +51,13 @@ export function SettingsScreen() {
           {checking ? t.checking : t.checkUpdates}
         </button>
       </Card>
+      <button
+        onClick={() => { if (confirm(t.resetConfirm)) dispatch({ type: 'reset' }) }}
+        className="w-full rounded-2xl border border-line py-3 text-sm text-cost active:bg-surface"
+      >
+        {t.resetAll}
+      </button>
+      <p className="px-1 text-sm text-muted">{t.installHint}</p>
     </div>
   )
 }

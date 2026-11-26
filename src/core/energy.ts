@@ -20,7 +20,8 @@ export function totalKwhPerDay(list: Appliance[]): number {
 
 /** Price per kWh including PPJ tax. */
 export function effectivePrice(t: Tariff): number {
-  return t.pricePerKwh * (1 + Math.max(0, t.ppjPercent) / 100)
+  const ppj = t.ppjOn ? Math.max(0, t.ppjPercent) : 0
+  return t.pricePerKwh * (1 + ppj / 100)
 }
 
 export function costForKwh(kwh: number, t: Tariff): number {

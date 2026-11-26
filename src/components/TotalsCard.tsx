@@ -67,7 +67,7 @@ export function TotalsCard({ items, tariff, onEditRate }: Props) {
         <button onClick={onEditRate} className="mt-4 flex w-full items-center justify-between rounded-xl border border-line px-3 py-2.5 text-sm active:bg-surface-2">
           <span className="text-muted">
             {t.rateNote}: <span className="text-text tabular-nums">{formatRupiahPrice(price)}/kWh</span>
-            {tariff.ppjPercent > 0 && <span> (+PPJ {tariff.ppjPercent}%)</span>}
+            {tariff.ppjOn && tariff.ppjPercent > 0 && <span> ({t.inclPpj} {String(tariff.ppjPercent).replace('.', lang === 'id' ? ',' : '.')}%)</span>}
           </span>
           <span className="font-medium text-accent">{t.editRate} ›</span>
         </button>

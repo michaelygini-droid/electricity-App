@@ -22,6 +22,11 @@ describe('app data', () => {
     s = reducer(s, { type: 'add', list: 'current', item: removed, index: 0 })
     expect(s.current[0].id).toBe(removed.id)
   })
+  it('upgrades data saved by older versions', () => {
+    const old = { ...INITIAL_DATA, tariff: { pricePerKwh: 1500, ppjPercent: 0 } }
+    const d = migrate(old)
+    expect(d.tariff).toEqual({ pricePerKwh: 1500, ppjPercent: 2.4, ppjOn: false, plan: 'R1-1300' })
+  })
   it('ignores broken saved data', () => {
     expect(migrate(null)).toBe(INITIAL_DATA)
     expect(migrate({ version: 99 })).toBe(INITIAL_DATA)
